@@ -12,6 +12,7 @@ const onError = (err) => {
 
 // mongoDB connection
 dbconn = (callback) => {
+
     mongoose.Promise = global.Promise;
     // Replace MONGODB_URI to MONGODB_URI_LOCAL if you want data goes to local
     var URI = process.env.MONGODB_URI_LOCAL;
