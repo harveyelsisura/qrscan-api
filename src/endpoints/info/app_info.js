@@ -12,6 +12,7 @@ module.exports = (req, res, next) => {
     try {
         appInfo.find()
             .then((holidays) => {
+                console.log(holidays)
                 res.send(200, { code: 'Success', msg: 'Successfully fetched', data: holidays });
             })
             .catch((err) => {
