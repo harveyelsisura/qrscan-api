@@ -1,0 +1,24 @@
+{
+    "name": "ab-qrscan-api",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node app.js"
+    },
+    "author": "Kenneth Harvey Elsisura",
+    "license": "ISC",
+    "dependencies": {
+        "async": "^2.6.1",
+        "bcrypt": "^2.0.1",
+        "bcryptjs": "^2.4.3",
+        "dotenv": "^6.0.0",
+        "generate-password": "^1.4.0",
+        "jsonwebtoken": "^8.3.0",
+        "lodash": "^4.17.10",
+        "moment": "^2.22.2",
+        "mongoose": "^5.2.3",
+        "restify": "^7.2.1"
+    }
+}
