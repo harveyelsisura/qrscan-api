@@ -4,22 +4,41 @@ const appInfo = require('../../models/app_info'),
         MSG_CONFLICT_ERROR,
         CODE_SUCCESS
     } = require('../../globals/globals'),
-    { InternalServerError } = require('restify-errors');
+    { sendError, sendSuccess, sendResponse } = require('../../utils/responses_utils');
 
 
 
 module.exports = (req, res, next) => {
-    try {
-        appInfo.find()
-            .then((holidays) => {
-                console.log(holidays)
-                res.send(200, { code: 'Success', msg: 'Successfully fetched', data: holidays });
-            })
-            .catch((err) => {
-                throw new InternalServerError(err.message);
+
+    const getInfo = () => {
+        return appInfo.find().then(data => data)
+            .catch(err => {
+                throw err;
             });
+    },
+        getData = (data) => {
+            return data
+        }
+
+    async function main() {
+        try {
+            var getInformation = await getInfo()
+            if (getInformation) {
+                var appinformation = await getData(getInformation);
+                sendSuccess(
+                    res,
+                    appinformation,
+                    "Success");
+            } else {
+                sendError(
+                    res,
+                    CODE_CONFLICT,
+                    MSG_CONFLICT_ERROR
+                );
+            }
+        } catch (err) {
+            console.log(err)
+        }
     }
-    catch (err) {
-        res.send(new InternalServerError(err));
-    }
+    main();
 }
