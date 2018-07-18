@@ -29,11 +29,9 @@ module.exports = async function (req, res, next) {
                 sendError(res, CODE_CONFLICT, MSG_CONFLICT_ERROR);
             }
         }).catch(err => {
-            sendError(res, CODE_CONFLICT, MSG_CONFLICT_ERROR);
             throw err
         })
     } catch (err) {
-        sendError(res, CODE_CONFLICT, MSG_CONFLICT_ERROR);
         console.log(err)
     }
 }
