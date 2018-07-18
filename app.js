@@ -10,7 +10,7 @@ dbconn(function (err) {
     if (err)
         console.log(err);
     else
-        console.log('MongoDB successfully connected to:', process.env.MONGODB_URI_LOCAL);
+        console.log('MongoDB successfully connected to:', process.env.MONGODB_URI);
 });
 
 //create server

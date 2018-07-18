@@ -15,7 +15,7 @@ dbconn = (callback) => {
 
     mongoose.Promise = global.Promise;
     // Replace MONGODB_URI to MONGODB_URI_LOCAL if you want data goes to local
-    var URI = process.env.MONGODB_URI_LOCAL;
+    var URI = process.env.MONGODB_URI;
     mongoose.connect(URI, { config: { autoIndex: false } }, function (err) {
         if (err) {
             callback(err);
