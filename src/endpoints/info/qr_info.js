@@ -8,37 +8,21 @@ const qrInfo = require('../../models/qr_info'),
 
 
 
-module.exports = (req, res, next) => {
-
-    const getInfo = () => {
-        return qrInfo.find().then(data => data)
+module.exports = async function (req, res, next) {
+    try {
+        qrInfo.find()
+            .then(data => {
+                if (data) {
+                    sendResponse(res, 200, data, "Success");
+                } else {
+                    sendResponse(res, 200, [], 'No data found');
+                }
+            })
             .catch(err => {
                 throw err;
             });
-    },
-        getData = (data) => {
-            return data
-        }
 
-    async function main() {
-        try {
-            var getInformation = await getInfo()
-            if (getInformation) {
-                var qrinformation = await getData(getInformation);
-                sendSuccess(
-                    res,
-                    qrinformation,
-                    "Success");
-            } else {
-                sendError(
-                    res,
-                    CODE_CONFLICT,
-                    MSG_CONFLICT_ERROR
-                );
-            }
-        } catch (err) {
-            console.log(err)
-        }
+    } catch (err) {
+        console.log(err)
     }
-    main();
 }

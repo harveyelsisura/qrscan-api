@@ -2,45 +2,29 @@ const qrInfo = require('../../models/qr_info'),
     {
         CODE_CONFLICT,
         MSG_CONFLICT_ERROR,
-        CODE_SUCCESS
+        CODE_SUCCESS,
+        CODE_NOT_FOUND
     } = require('../../globals/globals'),
     { sendError, sendSuccess, sendResponse } = require('../../utils/responses_utils');
 
 
 
-module.exports = (req, res, next) => {
-    const { _id } = req.params;
-
-    const getInfo = () => {
-        console.log(req.params)
-        return qrInfo.findById({ _id }).then(data => data)
+module.exports = async function (req, res, next) {
+    try {
+        const { _id } = req.params;
+        qrInfo.findById({ _id })
+            .then(data => {
+                if (data) {
+                    sendResponse(res, 200, data, "Successfully Fetched")
+                } else {
+                    sendResponse(res, 200, {}, CODE_NOT_FOUND)
+                }
+            })
             .catch(err => {
                 throw err;
             });
-    },
-        getData = (data) => {
-            return data
-        }
 
-    async function main() {
-        try {
-            var getInformation = await getInfo()
-            if (getInformation) {
-                var qrinformation = await getData(getInformation);
-                sendSuccess(
-                    res,
-                    qrinformation,
-                    "Success");
-            } else {
-                sendError(
-                    res,
-                    CODE_CONFLICT,
-                    MSG_CONFLICT_ERROR
-                );
-            }
-        } catch (err) {
-            console.log(err)
-        }
+    } catch (err) {
+        console.log(err)
     }
-    main();
 }

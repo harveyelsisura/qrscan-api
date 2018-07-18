@@ -52,8 +52,10 @@ module.exports = (req, res, next) => {
                 await saveInfo(getInformationAndUpdate)
                 sendResponse(res, 200, CODE_SUCCESS, "Successfully Update");
             } else {
-                sendResponse(
-                    res, 200, [], 'No data found'
+                sendError(
+                    res,
+                    CODE_CONFLICT,
+                    MSG_CONFLICT_ERROR
                 );
             }
         } catch (err) {
