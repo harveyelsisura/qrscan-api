@@ -33,6 +33,7 @@ module.exports = async function (req, res, next) {
             throw err
         })
     } catch (err) {
+        sendError(res, CODE_CONFLICT, MSG_CONFLICT_ERROR);
         console.log(err)
     }
 }
