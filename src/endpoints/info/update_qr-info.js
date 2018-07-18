@@ -8,21 +8,12 @@ const qrInfo = require('../../models/qr_info'),
 
 
 
-module.exports = (req, res, next) => {
-    const { _id } = req.params;
-    const {
-        company,
-        location,
-        date_info: {
-            date_issued,
-            date_expiry
-        },
-        qr_description,
-        status } = req.body;
+module.exports = async function (req, res, next) {
+    try {
 
-    const getInfoAndUpdate = () => {
-        console.log(req.body)
-        return qrInfo.findByIdAndUpdate(
+        const { _id } = req.params;
+        const { company, location, date_info: { date_issued, date_expiry }, qr_description, status } = req.body;
+        qrInfo.findByIdAndUpdate(
             _id,
             {
                 company: company,
@@ -35,32 +26,16 @@ module.exports = (req, res, next) => {
                 status: status
             }
         ).then(data => {
-            return data
+            if (data) {
+                sendResponse(res, 200, CODE_SUCCESS, "Successfully Update");
+            } else {
+                sendError(res, CODE_CONFLICT, MSG_CONFLICT_ERROR);
+            }
         }).catch(err => {
             throw err
         })
-    },
-        saveInfo = (data) => {
-            return data.save()
-        }
 
-
-    async function main() {
-        try {
-            var getInformationAndUpdate = await getInfoAndUpdate()
-            if (getInformationAndUpdate) {
-                await saveInfo(getInformationAndUpdate)
-                sendResponse(res, 200, CODE_SUCCESS, "Successfully Update");
-            } else {
-                sendError(
-                    res,
-                    CODE_CONFLICT,
-                    MSG_CONFLICT_ERROR
-                );
-            }
-        } catch (err) {
-            console.log(err)
-        }
+    } catch (err) {
+        console.log(err)
     }
-    main();
 }
