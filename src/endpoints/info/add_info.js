@@ -9,7 +9,7 @@ const appInfo = require('../../models/app_info'),
 module.exports = async function (req, res, next) {
     try {
         let information = req.body;
-        create.appInfo(information)
+        appInfo.create(information)
         sendResponse(res, 200, CODE_SUCCESS, "Successfully Added");
     } catch (err) {
         console.log(err)

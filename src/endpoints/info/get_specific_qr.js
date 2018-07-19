@@ -15,9 +15,9 @@ module.exports = async function (req, res, next) {
         qrInfo.findById({ _id })
             .then(data => {
                 if (data) {
-                    sendResponse(res, 200, data, "Successfully Fetched")
+                    sendSuccess(res, data, "Successfully Fetched")
                 } else {
-                    sendResponse(res, 200, {}, CODE_NOT_FOUND)
+                    sendResponse(res, {}, CODE_NOT_FOUND)
                 }
             })
             .catch(err => {

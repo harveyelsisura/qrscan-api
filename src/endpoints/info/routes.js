@@ -6,6 +6,7 @@ const getAppInfo = require('./app_info'),
     getQrInfo = require('./qr_info'),
     addQrInfo = require('./add_qr-info'),
     updateQrInfo = require('./update_qr-info'),
+    deleteQr = require('./delete_qr'),
     specificQrInfo = require('./get_specific_qr');
 
 
@@ -39,4 +40,8 @@ api.post({ path: '/qrscan/add_qr-info' },
 api.patch({ path: '/qrscan/update_qr-info/:_id' },
     // validateAppToken,
     updateQrInfo
+);
+api.del({ path: '/qrscan/delete-qr/:_id' },
+    // validateAppToken,
+    deleteQr
 );

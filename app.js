@@ -68,3 +68,4 @@ api.get("/", function (req, res) {
 
 // ROUTES
 require("./src/endpoints/info/routes");
+require("./src/endpoints/forms/routes");

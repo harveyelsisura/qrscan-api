@@ -13,9 +13,9 @@ module.exports = async function (req, res, next) {
         qrInfo.find()
             .then(data => {
                 if (data) {
-                    sendResponse(res, 200, data, "Success");
+                    sendSuccess(res, data, "Success");
                 } else {
-                    sendResponse(res, 200, [], 'No data found');
+                    sendSuccess(res, [], 'No data found');
                 }
             })
             .catch(err => {

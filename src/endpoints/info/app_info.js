@@ -4,7 +4,7 @@ const appInfo = require('../../models/app_info'),
         MSG_CONFLICT_ERROR,
         CODE_SUCCESS
     } = require('../../globals/globals'),
-    { sendResponse } = require('../../utils/responses_utils');
+    { sendSuccess } = require('../../utils/responses_utils');
 
 
 
@@ -12,10 +12,12 @@ module.exports = async function (req, res, next) {
     try {
         appInfo.find()
             .then(data => {
-                if (data) {
-                    sendResponse(res, 200, data, "Success");
+                let dataObject = data.pop();
+                console.log(dataObject)
+                if (dataObject) {
+                    sendSuccess(res, dataObject, "Success");
                 } else {
-                    sendResponse(res, 200, [], "Success");
+                    sendSuccess(res, {}, "Success");
                 }
             })
             .catch(err => {
