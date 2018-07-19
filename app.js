@@ -1,11 +1,35 @@
 require("dotenv").config();
 const restify = require("restify"),
     errors = require("restify-errors"),
-    { dbconn } = require("./src/utils/database_utils");
-// fs = require("fs"),
-// path = require("path");
+    { dbconn } = require("./src/utils/database_utils"),
+    { TRANSFERS_DIR } = require("./src/globals/globals"),
+    fs = require("fs"),
+    path = require("path");
 
 var readline = require("readline");
+const checkPath = path => {
+    fs.open(path, "r", (err, fd) => {
+        if (err) {
+            if (err.code === "ENOENT") {
+                fs.mkdir(path, err => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log(`${path} created`);
+                    }
+                });
+            }
+        }
+    });
+},
+    checkDocDir = () => {
+        const fileTransfers = path.join(__dirname, TRANSFERS_DIR);
+        console.log(fileTransfers);
+        checkPath(fileTransfers);
+    };
+
+checkDocDir();
+
 dbconn(function (err) {
     if (err)
         console.log(err);
@@ -68,4 +92,7 @@ api.get("/", function (req, res) {
 
 // ROUTES
 require("./src/endpoints/info/routes");
-require("./src/endpoints/forms/routes");
+
+api.get('/\/?.*/', restify.plugins.serveStatic({
+    directory: './storage/file_transfer'
+}))
