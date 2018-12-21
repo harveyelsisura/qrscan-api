@@ -18,8 +18,10 @@ module.exports = async function(req, res, next) {
       .findById({ _id })
       .then(data => {
         if (data) {
+          console.log("SUCCESS", data);
           sendSuccess(res, data, "Successfully Fetched");
         } else {
+          console.log("ERROR");
           sendResponse(res, {}, CODE_NOT_FOUND);
         }
       })
