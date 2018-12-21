@@ -13,8 +13,7 @@ const qrInfo = require("../../models/qr_info"),
 
 module.exports = async function(req, res, next) {
   try {
-    const { _id } = ObjectId(req.params);
-    console.log(_id);
+    const { _id } = req.params;
     qrInfo
       .findById({ _id })
       .then(data => {
